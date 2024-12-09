@@ -129,6 +129,19 @@ USE_I18N = True
 
 USE_TZ = True
 
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+
+    messages.SUCCESS: 'alert-success',
+
+}
+
+
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '8447bfe2614c32'
+EMAIL_HOST_PASSWORD = '5981ec4199835a'
+EMAIL_PORT = '2525'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

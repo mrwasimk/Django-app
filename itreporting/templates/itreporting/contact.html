@@ -1,9 +1,21 @@
 {% extends "itreporting/base.html" %}
-{% block content %}
-<h1>Contact Us</h1>
-{% endblock %}
-<body>
-    <h1>Welcome to Student IT Services</h1>
-</body>
 
-</html>
+{% block content %}
+<h1><p>Contact Us</p></h1>
+<form method="post">
+    <h1></h1>
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <div style="color: red;">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
