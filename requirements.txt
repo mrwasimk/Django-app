@@ -9,9 +9,9 @@ blinker==1.4
 certifi==2020.6.20
 chardet==4.0.0
 click==8.0.3
-cloud-init==24.3.1
+#cloud-init==24.3.1
 colorama==0.4.4
-command-not-found==0.3
+#command-not-found==0.3
 configobj==5.0.6
 constantly==15.1.0
 crispy-bootstrap4==2024.10
@@ -52,7 +52,7 @@ PyHamcrest==2.0.2
 PyJWT==2.3.0
 pyOpenSSL==21.0.0
 pyparsing==2.4.7
-pyparted==3.11.7
+#pyparted==3.11.7
 pyrsistent==0.18.1
 pyserial==3.5
 python-apt==2.4.0+ubuntu4
