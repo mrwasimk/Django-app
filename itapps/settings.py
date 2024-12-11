@@ -34,7 +34,9 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net",
+]
 
 
 # Application definition
