@@ -28,3 +28,21 @@ class Contact(forms.Form):
     Address = forms.CharField(max_length=50)
     Phonenumber = forms.CharField(max_length=11)
     Message = forms.CharField(widget=forms.Textarea)
+
+class Module(forms.Form):
+    modulename = forms.CharField(max_length=50)
+    Code = forms.CharField(max_length=50)
+    Credit = forms.CharField(max_length=50)
+    AddCategory = forms.CharField(max_length=50)
+    Phonenumber = forms.CharField(max_length=11)
+    Description = forms.CharField(widget=forms.Textarea)
+    Availability = forms.CharField(max_length=50)
+    Course = forms.CharField(max_length=50)
+
+class Contact(forms.Form):
+    Firstname = forms.CharField(max_length=50)
+    Surename = forms.CharField(max_length=50)
+    Email = forms.CharField(validators=[EmailValidator()])
+    Address = forms.CharField(max_length=50)
+    Phonenumber = forms.CharField(max_length=11)
+    Message = forms.CharField(widget=forms.Textarea)

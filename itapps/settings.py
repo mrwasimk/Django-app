@@ -21,23 +21,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-#i5oq#yhr5%jzke1#6orcpm9dvhpd+6)^(3lhdgazt&0eaiar9'
-
 SECRET_KEY = os.environ.get('SECRET_KEY', 'Pingpong123')
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
-DEBUG = WEBSITE_HOSTNAME == None
+DEBUG = WEBSITE_HOSTNAME is None
 if DEBUG:
-    ALLOWED_HOSTS = ['c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
+    ALLOWED_HOSTS = []
 else:
     ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
     CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+    
+'''SECRET_KEY = os.environ.get('SECRET_KEY', 'Pingpong123')
+WEBSITE_HOSTNAME = os.environ.get('production', None)
+DEBUG = WEBSITE_HOSTNAME is None
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = ['c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
+    CSRF_TRUSTED_ORIGINS = ['https://c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
 
-ALLOWED_HOSTS = ['c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
+DEBUG = False'''
+
+#ALLOWED_HOSTS = []
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,6 +103,8 @@ DATABASES = {
         'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
     }
 }
+
+
 
 
 # Password validation
