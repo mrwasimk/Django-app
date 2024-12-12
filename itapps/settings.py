@@ -27,16 +27,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'Pingpong123')
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 DEBUG = WEBSITE_HOSTNAME == None
 if DEBUG:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
 else:
     ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
     CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net",
-]
+ALLOWED_HOSTS = ['c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
 
 
 # Application definition
