@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'c1026187'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_34E6CF06C308437F945AECFCD8AA25CF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9755B8CE4CFC4B8BBAFF114F50C483A6 }}
