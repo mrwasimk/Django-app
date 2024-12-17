@@ -16,13 +16,14 @@
 {% if messages %}
 <div class="container mt-3">
     {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endfor %}
 </div>
 {% endif %}
+
 <body>
     <div class="container">
         {% if messages %}
@@ -51,11 +52,13 @@
                                 <div class="navbar-nav ml-auto">
                                     {% if user.is_authenticated %}
                                     <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                                    <a class="nav-item nav-link" href="{% url 'itreporting:issue-create' %}">Report New Issue</a>
+                                    <a class="nav-item nav-link" href="{% url 'itreporting:issue-create' %}">Report New
+                                        Issue</a>
                                     <form method="post" id="frm_logout" action="{% url 'logout' %}"
                                         style="display:inline;">
                                         {% csrf_token %}
-                                        <button type="submit" class="nav-item nav-link" style="background:none; border:none; cursor:pointer;">Logout</button>
+                                        <button type="submit" class="nav-item nav-link"
+                                            style="background:none; border:none; cursor:pointer;">Logout</button>
                                     </form>
                                     {% else %}
                                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
@@ -71,23 +74,31 @@
             <div class="col-md-8">
                 {% block content %}{% endblock %}
             </div>
-            <div class="col-md-4">
-                <div class="content-section">
-                    <h3>General Information</h3>
-                    <p class='text-muted'>Lorem ipsum dolor sit amet, iudico docendi
-                        inciderint per eu, ea vis scripta senserit periculis.
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-light">Latest Issues
-                            Reported</li>
-                        <li class="list-group-item list-group-item-light">IT Policies</li>
-                        <li class="list-group-item list-group-item-light">IT Regulations</li>
-                        <li class="list-group-item list-group-item-light">Upcoming
-                            Events</li>
-                    </ul>
-                    </p>
-                </div>
-            </div>
+            {% block sidebar %} 
+
+            <div class="col-md-4"> 
+
+                    <h3>Current Weathers</h3> 
+            
+                    <p class='text-muted'>Cities across United Kingdom 
+            
+                        <ul class="list-group"> 
+            
+                                {% for weather in weather_data %} 
+            
+                                    <li class="list-group-item list-group-item-light">{{ weather.city }}: {{ weather.description }}, {{ weather.temperature }}&deg;C</li> 
+            
+                                {% endfor %} 
+            
+                        </ul> 
+            
+                    </p> 
+            
+            </div> 
+            
+            {% endblock sidebar %} 
         </div>
+    </div>
     </div>
 
 

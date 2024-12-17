@@ -8,9 +8,31 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import DeleteView
 from .models import Contact
 from django.core.mail import EmailMessage
+import requests
+
 
 def home(request):
-    return render(request, 'itreporting/home.html', {'title': 'Welcome'})
+
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
+    cities = [('Sheffield', 'UK'), ('Melaka', 'Malaysia'), ('Bandung', 'Indonesia')]
+    weather_data = []
+    api_key = '1f9c0d6aa16a263969692d60d8801e9e'
+
+    for city in cities:
+        city_weather = requests.get(url.format(city[0], city[1], api_key)).json() # Request the API data and convert the JSON to Python data types
+        #print(city_weather)
+        
+    weather = {
+        'city': city_weather['name'] + ', ' + city_weather['sys']['country'],
+        'temperature': city_weather['main']['temp'],
+        'description': city_weather['weather'][0]['description']
+    }   
+    weather_data.append(weather) # Add the data for the current city into our list
+    return render(request, 'itreporting/home.html', {'title': 'Homepage', 'weather_data': weather_data})
+
+
+#def home(request):
+    #return render(request, 'itreporting/home.html', {'title': 'Welcome'})
 
 #def contact(request):
     #return render(request, 'itreporting/contact.html', {'title': 'Contact'})
@@ -90,3 +112,4 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         issue = self.get_object()
         return self.request.user == issue.author
+    
