@@ -1,0 +1,14 @@
+{% extends 'itreporting/base.html' %}
+{% block content %}
+
+<h1>Student Details</h1>
+<p><strong>Date of Birth:</strong> {{ student.dob }}</p>
+<p><strong>Address:</strong> {{ student.address }}</p>
+<p><strong>City:</strong> {{ student.city }}</p>
+<p><strong>Country:</strong> {{ student.country }}</p>
+{% if student.photo %}
+    <img src="{{ student.photo.url }}" alt="Profile Picture" style="width:150px;">
+{% endif %}
+<a href="{% url 'itreporting:student-list' %}">Back to Student List</a>
+
+{% endblock %}

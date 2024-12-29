@@ -29,20 +29,32 @@ class Contact(forms.Form):
     Phonenumber = forms.CharField(max_length=11)
     Message = forms.CharField(widget=forms.Textarea)
 
-class Module(forms.Form):
-    modulename = forms.CharField(max_length=50)
-    Code = forms.CharField(max_length=50)
-    Credit = forms.CharField(max_length=50)
-    AddCategory = forms.CharField(max_length=50)
-    Phonenumber = forms.CharField(max_length=11)
-    Description = forms.CharField(widget=forms.Textarea)
-    Availability = forms.CharField(max_length=50)
-    Course = forms.CharField(max_length=50)
+class Students(models.Model):
+    sname = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    dob= models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    photo = models.ImageField(default='default.png', upload_to='profile_pics')
 
-class Contact(forms.Form):
-    Firstname = forms.CharField(max_length=50)
-    Surename = forms.CharField(max_length=50)
-    Email = forms.CharField(validators=[EmailValidator()])
-    Address = forms.CharField(max_length=50)
-    Phonenumber = forms.CharField(max_length=11)
-    Message = forms.CharField(widget=forms.Textarea)
+class Module(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=100)
+    credit = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    description = models.CharField(max_length= 100)
+    availability= models.BooleanField(default=True)
+    register = models.CharField(max_length= 100, blank=True)
+    registered_users = models.ManyToManyField(User, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    
+class Registration(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE)
+    registerdate= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.module.name}"

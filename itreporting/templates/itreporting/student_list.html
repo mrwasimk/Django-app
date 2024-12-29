@@ -1,0 +1,11 @@
+{% extends 'itreporting/base.html' %}
+{% block content %}
+<h1>Student List</h1>
+<ul>
+  {% for student in students %}
+    <li>
+      <a href="{% url 'itreporting:student-detail' student.pk %}">Student ID: {{ student.pk }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

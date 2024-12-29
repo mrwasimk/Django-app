@@ -5,10 +5,14 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import DeleteView
 from .models import Contact
 from django.core.mail import EmailMessage
 import requests
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Module, Students, Registration
+from django.http import HttpResponse
 
 
 def home(request):
@@ -19,8 +23,8 @@ def home(request):
     api_key = '1f9c0d6aa16a263969692d60d8801e9e'
 
     for city in cities:
-        city_weather = requests.get(url.format(city[0], city[1], api_key)).json() # Request the API data and convert the JSON to Python data types
-        #print(city_weather)
+        city_weather = requests.get(url.format(city[0], city[1], api_key)).json()
+
         
     weather = {
         'city': city_weather['name'] + ', ' + city_weather['sys']['country'],
@@ -31,8 +35,43 @@ def home(request):
     return render(request, 'itreporting/home.html', {'title': 'Homepage', 'weather_data': weather_data})
 
 
-#def home(request):
-    #return render(request, 'itreporting/home.html', {'title': 'Welcome'})
+def course_list(request):
+    courses = Module.objects.all()
+    return render(request, 'itreporting/course_list.html', {'courses': courses})
+
+def course_detail(request, pk):
+    course = get_object_or_404(Module, pk=pk)
+    if request.method == "POST":
+        if not course.availability:
+            messages.error(request, "This course is currently unavailable for registration.")
+        elif course.registered_users.filter(id=request.user.id).exists():
+            messages.error(request, "You are already registered for this course.")
+        else:
+            course.registered_users.add(request.user)
+            messages.success(request, f"You have successfully registered for {course.name}.")
+            return redirect('course-detail', pk=pk)
+    return render(request, 'itreporting/course_detail.html', {'course': course})
+
+'''def course_detail(request, pk):
+    course = get_object_or_404(Module, pk=pk)
+    return render(request, 'itreporting/course_detail.html', {'course': course})'''
+
+
+def student_list(request):
+    students = Students.objects.all()
+    return render(request, 'students/student_list.html', {'students': students})
+
+def student_detail(request, pk):
+    student = get_object_or_404(Students, pk=pk)
+    return render(request, 'students/student_detail.html', {'student': student})
+
+def registration_list(request):
+    registrations = Registration.objects.all()
+    return render(request, 'registrations/registration_list.html', {'registrations': registrations})
+
+def registration_detail(request, pk):
+    registration = get_object_or_404(Registration, pk=pk)
+    return render(request, 'registrations/registration_detail.html', {'registration': registration})
 
 #def contact(request):
     #return render(request, 'itreporting/contact.html', {'title': 'Contact'})

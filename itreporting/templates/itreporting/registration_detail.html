@@ -1,0 +1,10 @@
+{% extends 'itreporting/base.html' %}
+{% block content %}
+
+<h1>Registration Details</h1>
+<p><strong>Student:</strong> {{ registration.student }}</p>
+<p><strong>Module:</strong> {{ registration.module }}</p>
+<p><strong>Register Date:</strong> {{ registration.registerdate }}</p>
+<a href="{% url 'itreporting:registration-list' %}">Back to Registration List</a>
+
+{% endblock %}

@@ -39,7 +39,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
     ALLOWED_HOSTS = ['c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
-    CSRF_TRUSTED_ORIGINS = ['https://c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net']
+    CSRF_TRUSTED_ORIGINS = ['https://c1026187-dybdhkfjhaf7dmaz.uksouth-01.azurewebsites.net'] 
 
 DEBUG = False'''
 

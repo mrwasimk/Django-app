@@ -1,0 +1,27 @@
+{% extends 'itreporting/base.html' %}
+
+
+{% block content %}
+<h1>{{ course.name }}</h1>
+<p><strong>Code:</strong> {{ course.code }}</p>
+<p><strong>Credits:</strong> {{ course.credit }}</p>
+<p><strong>Category:</strong> {{ course.category }}</p>
+<p><strong>Description:</strong> {{ course.description }}</p>
+<p><strong>Availability:</strong> {{ course.availability|yesno:"Available,Unavailable" }}</p>
+
+{% if course.availability %}
+    {% if user.is_authenticated %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Register for this Course</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'users:login' %}">Log in to register</a></p>
+    {% endif %}
+{% else %}
+    <p>This course is currently unavailable.</p>
+{% endif %}
+
+<a href="{% url 'itreporting:course-list' %}">Back to Courses</a>
+
+{% endblock %}
