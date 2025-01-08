@@ -1,8 +1,17 @@
 {% extends "itreporting/base.html" %}
+{% load static %}
 
 {% block content %}
-  <h3>Sheffield Hallam University</h3>
-  <div>
-    <h1><p>Sheffield Hallam University</p></h1>
-  </div>
+<div style="text-align: center; padding: 20px;">
+    <h3>Welcome to Sheffield Hallam University</h3>
+    <div>
+        <img src="{% static 'images/Sheffield-Hallam-University.jpg' %}" 
+             alt="Sheffield Hallam University" 
+             style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 20px;">
+        <p style="margin-top: 20px; font-size: 18px;">
+            Sheffield Hallam University is where we make dreams come true and give you the best University experience.
+        </p>
+        <p>Apply now to our courses and pick a module!</p>
+    </div>
+</div>
 {% endblock %}

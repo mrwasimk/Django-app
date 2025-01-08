@@ -4,11 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(label='Email address', help_text='Your SHU email address.')
+    email = forms.EmailField(required=True)
+    address = forms.CharField(max_length=255, required=False)  # Add custom fields here
+    city = forms.CharField(max_length=100, required=False)
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'address', 'city', 'country' 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', 'address', 'city']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
