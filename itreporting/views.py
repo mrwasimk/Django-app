@@ -13,10 +13,11 @@ import requests
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Module, Students, Registration
 from django.http import HttpResponse
+from datetime import datetime
 
 
 def home(request):
-
+    
     url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
     cities = [('Sheffield', 'UK'), ('Melaka', 'Malaysia'), ('Bandung', 'Indonesia')]
     weather_data = []
@@ -24,14 +25,13 @@ def home(request):
 
     for city in cities:
         city_weather = requests.get(url.format(city[0], city[1], api_key)).json()
+        weather = {
+            'city': city_weather['name'] + ', ' + city_weather['sys']['country'],
+            'temperature': city_weather['main']['temp'],
+            'description': city_weather['weather'][0]['description']
+        }
+        weather_data.append(weather)  # Add each city's data to the list
 
-        
-    weather = {
-        'city': city_weather['name'] + ', ' + city_weather['sys']['country'],
-        'temperature': city_weather['main']['temp'],
-        'description': city_weather['weather'][0]['description']
-    }   
-    weather_data.append(weather) # Add the data for the current city into our list
     return render(request, 'itreporting/home.html', {'title': 'Homepage', 'weather_data': weather_data})
 
 
@@ -39,23 +39,30 @@ def course_list(request):
     courses = Module.objects.all()
     return render(request, 'itreporting/course_list.html', {'courses': courses})
 
+@login_required
 def course_detail(request, pk):
     course = get_object_or_404(Module, pk=pk)
+    registrations = Registration.objects.filter(module=course)
     if request.method == "POST":
         if not course.availability:
             messages.error(request, "This course is currently unavailable for registration.")
-        elif course.registered_users.filter(id=request.user.id).exists():
+        elif Registration.objects.filter(user=request.user, module=course).exists():
             messages.error(request, "You are already registered for this course.")
         else:
-            course.registered_users.add(request.user)
+            Registration.objects.create(user=request.user, module=course, registerdate=datetime.now())
             messages.success(request, f"You have successfully registered for {course.name}.")
-            return redirect('course-detail', pk=pk)
-    return render(request, 'itreporting/course_detail.html', {'course': course})
+            return redirect('itreporting:course-detail', pk=pk)
+    return render(request, 'itreporting/course_detail.html', {'course': course, 'registrations': registrations})
+
 
 '''def course_detail(request, pk):
     course = get_object_or_404(Module, pk=pk)
     return render(request, 'itreporting/course_detail.html', {'course': course})'''
 
+@login_required
+def registration_detail(request):
+    registrations = Registration.objects.filter(user=request.user)
+    return render(request, 'itreporting/registration_detail.html', {'registrations': registrations})
 
 def student_list(request):
     students = Students.objects.all()
@@ -67,11 +74,12 @@ def student_detail(request, pk):
 
 def registration_list(request):
     registrations = Registration.objects.all()
-    return render(request, 'registrations/registration_list.html', {'registrations': registrations})
+    return render(request, 'itreporting/registration_list.html', {'registrations': registrations})
 
-def registration_detail(request, pk):
+
+'''def registration_detail(request, pk):
     registration = get_object_or_404(Registration, pk=pk)
-    return render(request, 'registrations/registration_detail.html', {'registration': registration})
+    return render(request, 'registrations/registration_detail.html', {'registration': registration})'''
 
 #def contact(request):
     #return render(request, 'itreporting/contact.html', {'title': 'Contact'})

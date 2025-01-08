@@ -1,13 +1,23 @@
-{% extends 'itreporting/base.html' %}
+{% extends "itreporting/base.html" %}
+
 {% block content %}
-<h1>Registration List</h1>
-<ul>
-  {% for registration in registrations %}
-    <li>
-      <a href="{% url 'itreporting:registration-detail' registration.pk %}">
-        Registration: {{ registration.pk }} - Student: {{ registration.student }} - Module: {{ registration.module }}
-      </a>
-    </li>
-  {% endfor %}
-</ul>
+<h2>Registration List</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Module</th>
+            <th>Registration Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for registration in registrations %}
+        <tr>
+            <td>{{ registration.user.username }}</td>
+            <td>{{ registration.module.name }}</td>
+            <td>{{ registration.register_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

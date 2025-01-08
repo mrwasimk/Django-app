@@ -16,9 +16,11 @@ urlpatterns = [
     path('issue/<int:pk>/delete/', PostDeleteView.as_view(), name = 'issue-delete'),
     
     path('courses/', views.course_list, name = 'course-list'),
-    path('courses/<int:pk>', views.course_detail, name = 'course-detail'),
+    path('courses/<int:pk>/', views.course_detail, name='course-detail'),
+
     path('student/', views.student_list, name = 'student-list'),
-    path('student/<int:pk>', views.student_detail, name = 'student-detail'),  
+    path('student/<int:pk>', views.student_detail, name = 'student-detail'), 
+
     path('registration/', views.registration_list, name = 'registration-list'),
     path('registration/<int:pk>', views.registration_detail, name = 'registration-detail'),
 ]

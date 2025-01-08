@@ -1,6 +1,5 @@
 {% extends 'itreporting/base.html' %}
 
-
 {% block content %}
 <h1>{{ course.name }}</h1>
 <p><strong>Code:</strong> {{ course.code }}</p>
@@ -11,7 +10,7 @@
 
 {% if course.availability %}
     {% if user.is_authenticated %}
-        <form method="POST" action="">
+        <form method="POST" action="{% url 'itreporting:course-detail' pk=course.pk %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Register for this Course</button>
         </form>
@@ -21,6 +20,30 @@
 {% else %}
     <p>This course is currently unavailable.</p>
 {% endif %}
+
+<h3>Registrations:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Profile Picture</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for registration in registrations %}
+        <tr>
+            <td>{{ registration.user.username }}</td>
+            <td>
+                {% if registration.user.profile.image %}
+                    <img src="{{ registration.user.profile.image.url }}" alt="Profile Picture" width="50">
+                {% else %}
+                    <p>No Image</p>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 <a href="{% url 'itreporting:course-list' %}">Back to Courses</a>
 
